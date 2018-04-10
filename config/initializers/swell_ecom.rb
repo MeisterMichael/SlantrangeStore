@@ -35,10 +35,10 @@ SwellEcom.configure do |config|
 	# config.shipping_service_class = "::ApplicationShippingService"
 	# config.shipping_service_config = {}
 
-	# config.tax_service_class = "SwellEcom::TaxServices::TaxJarTaxService"
+	# config.tax_service_class = "::ApplicationTaxService"
 	# config.tax_service_config = {}
 
-	# config.discount_service_class = "ApplicationDiscountService"
+	# config.discount_service_class = "::ApplicationDiscountService"
 	# config.discount_service_config = {}
 
 	# config.order_code_prefix = 'swell-o'

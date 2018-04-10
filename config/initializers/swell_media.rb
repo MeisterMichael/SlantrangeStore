@@ -1,12 +1,12 @@
 
 SwellMedia.configure do |config|
 
-	config.app_name = ENV['APP_NAME'] || 'SwellApp'
+	config.app_name = 'SlantRange'
 	config.app_host = ENV['APP_DOMAIN'] || 'localhost:3000'
-	config.app_description = 'A Very Swell App indeed'
-	config.app_logo = 'https://media.licdn.com/media/p/1/000/27f/2a3/36f3707.jpg'
+	config.app_description = 'SLANTRANGE systems create valuable new agricultural metrics through an innovative combination of remote sensing and in-field analytics.'
+	config.app_logo = 'http://www.slantrange.com/wp-content/uploads/2015/11/SL-Logo-Improving-Ag-WHITE.png'
 
-	config.twitter_handle = '@gkparishphilp'
+	config.twitter_handle = '@slantrange'
 
 	# config.encryption_secret = 'fdty45u654jtyredhgr4u654etrhdht54eu6e5hdrt5'
 
