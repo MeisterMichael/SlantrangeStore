@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 		get '/register' => 'registrations#new', as: 'register'
 	end
 
-	# devise_for :users, :controllers => { :omniauth_callbacks => 'oauth', :registrations => 'registrations', :sessions => 'sessions', :passwords => 'passwords' }
+	devise_for :users, :controllers => { :omniauth_callbacks => 'oauth', :registrations => 'registrations', :sessions => 'sessions', :passwords => 'passwords' }
 
 	mount SwellEcom::Engine, :at => '/'
 	mount SwellMedia::Engine, :at => '/'
