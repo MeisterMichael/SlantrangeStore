@@ -15,10 +15,10 @@ GIT
 
 GIT
   remote: git://github.com/Groundswell/swell_media.git
-  revision: b3c2a2e2a273256168ff8beb6b15ec02bdcde2cb
-  tag: v2.5.0
+  revision: b1fa0e665d832d483d6f44ff559ae218ef056cbd
+  tag: v2.5.1
   specs:
-    swell_media (2.5.0)
+    swell_media (2.5.1)
       acts-as-taggable-array-on
       awesome_nested_set (~> 3.1)
       carrierwave
@@ -31,6 +31,7 @@ GIT
       jquery-rails
       jquery-ui-rails
       kaminari
+      omniauth
       pg
       pundit
       rails (>= 5.1.4)
@@ -513,7 +514,6 @@ DEPENDENCIES
   fog-ovirt (= 1.0.1)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
-  omniauth
   puma (~> 3.7)
   rails (~> 5.1.5)
   sass-rails (~> 5.0)
