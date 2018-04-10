@@ -56,6 +56,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 gem 'fog-ovirt', '1.0.1'
+gem 'omniauth'
 
 
 
@@ -63,11 +64,12 @@ gem 'fog-ovirt', '1.0.1'
 
 # dev
 swell_engines_path = ENV['SWELL_ENGINE_PATH'] || '../engines'
-gem 'swell_media', path: "#{swell_engines_path}/swell_media"
-gem 'swell_ecom', path: "#{swell_engines_path}/swell_ecom"
-gem 'swell_analytics', path: "#{swell_engines_path}/swell_analytics"
+# gem 'swell_media', path: "#{swell_engines_path}/swell_media"
+# gem 'swell_ecom', path: "#{swell_engines_path}/swell_ecom"
+# gem 'swell_analytics', path: "#{swell_engines_path}/swell_analytics"
 
 # prod
-# gem 'swell_media', git: 'git://github.com/Groundswell/swell_media.git', :tag => "v2.5.0"
-# gem 'swell_ecom', git: 'git://github.com/Groundswell/swell_ecom.git', :tag => "v2.6.1"
+gem 'swell_media', git: 'git://github.com/Groundswell/swell_media.git', :tag => "v2.5.0"
+gem 'swell_theme_store', git: 'git://github.com/Groundswell/swell_theme_store.git'
+gem 'swell_ecom', git: 'git://github.com/Groundswell/swell_ecom.git', :tag => "v2.6.1"
 # gem 'swell_analytics', git: 'git://github.com/Groundswell/swell_analytics.git', :tag => "v2.2.0"
