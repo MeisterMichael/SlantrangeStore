@@ -56,6 +56,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 
+gem 'fog-ovirt', '1.0.1'
+
+
+
+
 # dev
 swell_engines_path = ENV['SWELL_ENGINE_PATH'] || '../engines'
 gem 'swell_media', path: "#{swell_engines_path}/swell_media"
