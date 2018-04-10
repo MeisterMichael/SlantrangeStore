@@ -71,6 +71,14 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_shipping (2.1.1)
+      active_utils (~> 3.3.1)
+      activesupport (>= 4.2, < 5.2.0)
+      measured (>= 2.0)
+      nokogiri (>= 1.6)
+    active_utils (3.3.11)
+      activesupport (>= 3.2, < 6.0)
+      i18n
     activejob (5.1.6)
       activesupport (= 5.1.6)
       globalid (>= 0.3.6)
@@ -351,6 +359,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    measured (2.4.0)
+      activesupport (>= 4.2)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -507,6 +517,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_shipping (= 2.1.1)
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
