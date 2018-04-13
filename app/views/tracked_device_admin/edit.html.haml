@@ -1,0 +1,56 @@
+
+
+
+.container-fluid
+	.row
+		.col-xs-10
+			%ul.breadcrumb
+				%li
+					%a{ href: tracked_device_admin_index_path }
+						%i.fa.fa-angle-left
+						Tracked Devices
+			%h2
+				%strong=@tracked_device.device_type.title
+				%small=@tracked_device.serial_number
+
+		.col-xs-2.text-right
+
+	= form_for @tracked_device, url: tracked_device_admin_path( @tracked_device ) do |f|
+		.row
+			.col-xs-8
+				.well.white-well
+					.form-group
+						= f.label :device_type_id, 'Device Type'
+						= f.collection_select :device_type_id, DeviceType.order( :title ), :id, :title, {}, class: 'form-control'
+					.form-group
+						= f.label :serial_number
+						= f.text_field :serial_number, class: 'form-control'
+					.form-group
+						= f.label :notes
+						= f.text_area :notes, class: 'form-control'
+
+			.col-xs-4
+				.well.white-well
+					%h4
+						Settings
+
+					.form-group
+						= f.label :status
+						= f.collection_select :status, TrackedDevice.statuses, :first, :first, {}, class: 'form-control'
+					.form-group
+						= f.label :user_id, 'Current Owner'
+						= f.collection_select :user_id, User.where( id: @tracked_device.user_id ), :id, :name, { include_blank: 'None' }, class: 'form-control'
+					.form-group
+						= f.label :make
+						= f.text_field :make, class: 'form-control'
+					.form-group
+						= f.label :model
+						= f.text_field :model, class: 'form-control'
+					.form-group
+						= f.label :version
+						= f.text_field :version, class: 'form-control'
+
+					%hr
+
+					.form-group
+						= f.submit 'Update', class: 'btn btn-primary'

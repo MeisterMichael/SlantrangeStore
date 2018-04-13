@@ -1,0 +1,29 @@
+#new_tracked_device.modal.fade
+	.modal-dialog
+		.modal-content
+			.modal-header
+				%button.close{ type: :button, 'data-dismiss' => 'modal', 'aria-hidden' => 'true' }
+					&times;
+				%h4.modal-title
+					New Tracked Device
+			= form_for TrackedDevice.new, url: tracked_device_admin_index_path do |f|
+				.modal-body
+					.form-group
+						= f.label :device_type_id, 'Device Type'
+						= f.collection_select :device_type_id, DeviceType.order( :title ), :id, :title, {}, class: 'form-control'
+					.form-group
+						= f.label :serial_number
+						= f.text_field :serial_number, class: 'form-control'
+					.form-group
+						= f.label :make
+						= f.text_field :make, class: 'form-control'
+					.form-group
+						= f.label :model
+						= f.text_field :model, class: 'form-control'
+					.form-group
+						= f.label :version
+						= f.text_field :version, class: 'form-control'
+				.modal-footer
+					%button.btn.btn-default{ type: :button, 'data-dismiss' => 'modal' }
+						Close
+					= f.submit 'Create', class: 'btn btn-primary'

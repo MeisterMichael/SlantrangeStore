@@ -50,7 +50,8 @@ SwellEcom.configure do |config|
 	}
 
 
-
+	# config.subscription_service_class = "::ApplicationSubscriptionService"
+	# config.subscription_service_config = {}
 
 
 	config.tax_service_class = "::ApplicationTaxService"

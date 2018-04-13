@@ -1,0 +1,73 @@
+
+
+
+.container-fluid
+	.row
+		.col-xs-10.col-sm-6
+			%h2 Tracked Devices
+		.col-xs-2.col-sm-6.text-right
+			- if policy(SwellEcom::Product).admin_create?
+				%a.btn.btn-success{ data: { toggle: :modal, target: '#new_tracked_device' } }
+					%i.fa.fa-plus-square
+					New
+				%a.btn.btn-success{ data: { toggle: :modal, target: '#bulk_new_tracked_device' } }
+					%i.fa.fa-plus-square
+					Bulk New
+	.row{ style: 'margin-top: 0' }
+		.col-xs-6
+			= raw paginate @tracked_devices
+			= "(#{pluralize @tracked_devices.total_count, 'Tracked Device'})"
+		.col-xs-6
+			= form_tag tracked_device_admin_index_path, method: :get, class: 'pull-right form-inline' do
+				= select_tag :status, options_from_collection_for_select( TrackedDevice.statuses, :first, Proc.new{|status|status.first.humanize}, params[:status] ), { prompt: "-- All --", class: 'form-control' }
+				= text_field_tag :q, params[:q], class: 'form-control'
+				= submit_tag 'Search', class: 'btn btn-primary'
+				= link_to 'Clear', tracked_device_admin_index_path, class: 'btn btn-default'
+
+	.row
+		.col-xs-12
+			%table.table.table-light.table-bordered
+				%thead
+					%th
+						Device Type
+					%th
+						Serial Number
+					%th
+						Owner
+					%th Status
+					%th
+				%tbody
+					- if @tracked_devices.blank?
+						%tr
+							%td.text-center{ colspan: 5 } No Results
+					- else
+						- @tracked_devices.each do |tracked_device|
+							%tr
+								%td
+									= link_to tracked_device.device_type.title, edit_tracked_device_admin_path( tracked_device.id )
+								%td
+									= link_to tracked_device.serial_number, edit_tracked_device_admin_path( tracked_device.id )
+								%td
+									= tracked_device.user.try(:full_name) || '-'
+								%td
+									.badge{ class: tracked_device.status }
+										= tracked_device.status.humanize
+								%td
+									.btn-group
+										%button.btn.btn-mini.btn-default.dropdown-toggle{ data: { toggle: :dropdown } }
+											%i.fa.fa-cog
+											%b.caret
+										%ul.dropdown-menu
+											%li
+												%a{ href: edit_tracked_device_admin_path( tracked_device.id ) }
+													%i.fa.fa-pencil
+													Edit
+											%li.divider
+											%li
+												%a{ href: tracked_device_admin_path( tracked_device ), data: { method: 'delete', confirm: 'Are you sure?' } }
+													%i.fa.fa-trash-o
+													Delete!
+
+
+= render 'new_modal'
+= render 'bulk_new_modal'
