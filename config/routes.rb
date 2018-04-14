@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
 	resources :tracked_device_admin do
 		post :bulk_create, on: :collection
+		get :select_user, on: :member
 	end
 
 	devise_for :users, :controllers => { :omniauth_callbacks => 'oauth', :registrations => 'registrations', :sessions => 'sessions', :passwords => 'passwords' }

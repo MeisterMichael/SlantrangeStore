@@ -62,14 +62,25 @@ class TrackedDeviceAdminController < SwellMedia::AdminController
 		filters = ( params[:filters] || {} ).select{ |attribute,value| not( value.nil? ) }
 		filters[ params[:status] ] = true if params[:status].present? && params[:status] != 'all'
 		@tracked_devices = SearchService.new.tracked_device_search( params[:q], filters, page: params[:page], order: { sort_by => sort_dir } )
+	end
 
-		@tracked_devices = @tracked_devices.page( params[:page] )
+	def select_user
+		authorize( TrackedDevice, :admin_edit? )
+
+		sort_by = params[:sort_by] || 'created_at'
+		sort_dir = params[:sort_dir] || 'desc'
+
+		@users = User.active.order(id: :desc).page(params[:page])
+		@users = SearchService.new.user_search( params[:q], {}, page: params[:page], order: { :first_name => :asc, :last_name => :asc } ) if params[:q].present?
+
 	end
 
 
 	def update
 		authorize( @tracked_device, :admin_update? )
 		@tracked_device.attributes = tracked_device_params
+
+		@tracked_device.status = (tracked_device_params[:status] || 'owned') if @tracked_device.user_id_changed? && @tracked_device.user_id.present?
 
 		if @tracked_device.save
 			set_flash 'Tracked Device Updated'

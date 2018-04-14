@@ -25,6 +25,19 @@
 					.form-group
 						= f.label :serial_number
 						= f.text_field :serial_number, class: 'form-control'
+					.row{ style: 'margin-top: 0;' }
+						.col-xs-12.col-md-4
+							.form-group
+								= f.label :make
+								= f.text_field :make, class: 'form-control'
+						.col-xs-12.col-md-4
+							.form-group
+								= f.label :model
+								= f.text_field :model, class: 'form-control'
+						.col-xs-12.col-md-4
+							.form-group
+								= f.label :version
+								= f.text_field :version, class: 'form-control'
 					.form-group
 						= f.label :notes
 						= f.text_area :notes, class: 'form-control'
@@ -40,15 +53,7 @@
 					.form-group
 						= f.label :user_id, 'Current Owner'
 						= f.collection_select :user_id, User.where( id: @tracked_device.user_id ), :id, :name, { include_blank: 'None' }, class: 'form-control'
-					.form-group
-						= f.label :make
-						= f.text_field :make, class: 'form-control'
-					.form-group
-						= f.label :model
-						= f.text_field :model, class: 'form-control'
-					.form-group
-						= f.label :version
-						= f.text_field :version, class: 'form-control'
+						%a{ href: select_user_tracked_device_admin_path( @tracked_device ) } edit owner
 
 					%hr
 
