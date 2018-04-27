@@ -55,8 +55,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
+gem 'authorizenet'
 gem 'active_shipping', '2.1.1'
 gem 'fog-ovirt', '1.0.1'
+gem 'paypal-sdk-rest'
 gem 'taxjar-ruby'
 gem 'ups'
 
