@@ -69,11 +69,12 @@ gem 'ups'
 # dev
 swell_engines_path = ENV['SWELL_ENGINE_PATH'] || '../engines'
 # gem 'swell_media', path: "#{swell_engines_path}/swell_media"
+# gem 'swell_theme_store', git: 'git://github.com/Groundswell/swell_theme_store.git'
 # gem 'swell_ecom', path: "#{swell_engines_path}/swell_ecom"
-# gem 'swell_analytics', path: "#{swell_engines_path}/swell_analytics"
+# gem 'bunyan', path: "#{swell_engines_path}/bunyan"
 
 # prod
-gem 'swell_media', git: 'git://github.com/Groundswell/swell_media.git', :tag => "v2.5.1"
+gem 'swell_media', git: 'https://github.com/Groundswell/swell_media.git', :tag => "v2.11.0"
 gem 'swell_theme_store', git: 'git://github.com/Groundswell/swell_theme_store.git'
-gem 'swell_ecom', git: 'git://github.com/Groundswell/swell_ecom.git', :tag => "v2.6.1"
-# gem 'swell_analytics', git: 'git://github.com/Groundswell/swell_analytics.git', :tag => "v2.2.0"
+gem 'swell_ecom', git: 'https://github.com/Groundswell/swell_ecom.git', :tag => "v2.20.0"
+gem 'bunyan', git: 'https://github.com/Groundswell/bunyan.git', :tag => "v1.3.0"
