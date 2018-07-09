@@ -1,9 +1,7 @@
 
 SwellEcom.configure do |config|
 
-	config.origin_address = {}
-
-	config.warehouse_address = {
+	address = {
 		street: '4901 Morena Blvd',
 		city: 'San Diego',
 		state: 'CA',
@@ -12,7 +10,9 @@ SwellEcom.configure do |config|
 		phone: '1.858.412.4323'
 	}
 
-	config.nexus_addresses = []
+	config.origin_address = address
+	config.warehouse_address = address
+	config.nexus_addresses = [ address ]
 
 	config.order_email_from = "no-reply@#{ENV['APP_DOMAIN']}"
 

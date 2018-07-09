@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413131300) do
+ActiveRecord::Schema.define(version: 20180709153664) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,83 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.index ["parent_obj_type", "parent_obj_id"], name: "index_assets_on_parent_obj_type_and_parent_obj_id"
     t.index ["tags"], name: "index_assets_on_tags", using: :gin
     t.index ["user_id"], name: "index_assets_on_user_id"
+  end
+
+  create_table "bunyan_clients", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "uuid"
+    t.string "ip"
+    t.string "user_agent"
+    t.string "country"
+    t.string "state"
+    t.string "city"
+    t.string "referrer_url"
+    t.string "referrer_host"
+    t.string "referrer_path"
+    t.string "referrer_params"
+    t.string "lander_url"
+    t.string "lander_host"
+    t.string "lander_path"
+    t.string "lander_params"
+    t.string "campaign_source"
+    t.string "campaign_medium"
+    t.string "campaign_term"
+    t.string "campaign_content"
+    t.string "campaign_name"
+    t.integer "campaign_cost"
+    t.string "partner_source"
+    t.string "partner_id"
+    t.boolean "is_bot"
+    t.string "device_type"
+    t.string "device_family"
+    t.string "device_brand"
+    t.string "device_model"
+    t.string "os_name"
+    t.string "os_version"
+    t.string "browser_family"
+    t.string "browser_version"
+    t.hstore "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bunyan_clients_on_user_id"
+    t.index ["uuid"], name: "index_bunyan_clients_on_uuid", unique: true
+  end
+
+  create_table "bunyan_events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "client_id"
+    t.string "target_obj_type"
+    t.bigint "target_obj_id"
+    t.string "name"
+    t.string "category"
+    t.text "content"
+    t.integer "value", default: 0
+    t.string "ip"
+    t.string "user_agent"
+    t.string "campaign_source"
+    t.string "campaign_medium"
+    t.string "campaign_name"
+    t.string "campaign_term"
+    t.string "campaign_content"
+    t.integer "campaign_cost"
+    t.string "partner_source"
+    t.string "partner_id"
+    t.string "referrer_url"
+    t.string "referrer_host"
+    t.string "referrer_path"
+    t.string "referrer_params"
+    t.string "page_url"
+    t.string "page_host"
+    t.string "page_path"
+    t.string "page_params"
+    t.string "page_name"
+    t.hstore "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_bunyan_events_on_client_id"
+    t.index ["name", "created_at", "page_url"], name: "index_bunyan_events_on_name_and_created_at_and_page_url"
+    t.index ["target_obj_type", "target_obj_id"], name: "index_bunyan_events_on_target_obj_type_and_target_obj_id"
+    t.index ["user_id"], name: "index_bunyan_events_on_user_id"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -195,6 +272,7 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "type"
+    t.integer "cached_uses", default: 0
     t.index ["type", "id"], name: "index_discounts_on_type_and_id"
     t.index ["user_id", "status", "code"], name: "index_discounts_on_user_id_and_status_and_code"
     t.index ["user_id", "status", "end_at"], name: "index_discounts_on_user_id_and_status_and_end_at"
@@ -247,9 +325,11 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.boolean "preferred", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tags", default: [], array: true
     t.index ["geo_country_id", "geo_state_id"], name: "index_geo_addresses_on_geo_country_id_and_geo_state_id"
     t.index ["geo_country_id"], name: "index_geo_addresses_on_geo_country_id"
     t.index ["geo_state_id"], name: "index_geo_addresses_on_geo_state_id"
+    t.index ["tags"], name: "index_geo_addresses_on_tags", using: :gin
     t.index ["user_id"], name: "index_geo_addresses_on_user_id"
   end
 
@@ -440,13 +520,19 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.string "provider_customer_payment_profile_reference"
     t.datetime "delivered_at"
     t.integer "discount", default: 0
+    t.string "type"
+    t.string "source", default: "checkout"
+    t.text "source_url"
+    t.string "provider_reference"
     t.index ["billing_address_id"], name: "index_orders_on_billing_address_id"
     t.index ["code"], name: "index_orders_on_code", unique: true
     t.index ["email", "billing_address_id", "shipping_address_id"], name: "email_addr_indx"
     t.index ["email", "status"], name: "index_orders_on_email_and_status"
     t.index ["parent_type", "parent_id"], name: "index_orders_on_parent_type_and_parent_id"
     t.index ["shipping_address_id"], name: "index_orders_on_shipping_address_id"
+    t.index ["source", "status", "payment_status"], name: "index_orders_on_source_and_status_and_payment_status"
     t.index ["status"], name: "index_orders_on_status"
+    t.index ["type", "status", "payment_status"], name: "index_orders_on_type_and_status_and_payment_status"
     t.index ["user_id", "billing_address_id", "shipping_address_id"], name: "user_id_addr_indx"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -620,6 +706,9 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.datetime "failed_at"
     t.text "failed_message"
     t.integer "failed_attempts", default: 0
+    t.integer "shipping_carrier_service_id"
+    t.integer "shipping"
+    t.integer "tax"
     t.index ["billing_address_id"], name: "index_subscriptions_on_billing_address_id"
     t.index ["shipping_address_id"], name: "index_subscriptions_on_shipping_address_id"
     t.index ["subscription_plan_id"], name: "index_subscriptions_on_subscription_plan_id"
@@ -729,6 +818,9 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tags", default: [], array: true
+    t.integer "wholesale_profile_id"
+    t.integer "preferred_shipping_address_id"
+    t.integer "preferred_billing_address_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -736,6 +828,33 @@ ActiveRecord::Schema.define(version: 20180413131300) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+    t.index ["wholesale_profile_id", "status"], name: "index_users_on_wholesale_profile_id_and_status"
+  end
+
+  create_table "wholesale_items", force: :cascade do |t|
+    t.bigint "wholesale_profile_id"
+    t.string "item_type"
+    t.bigint "item_id"
+    t.integer "min_quantity", default: 0
+    t.integer "price", default: 0
+    t.index ["item_type", "item_id"], name: "index_wholesale_items_on_item_type_and_item_id"
+    t.index ["wholesale_profile_id", "item_id", "item_type", "min_quantity"], name: "index_wholesale_items_on_prof_id_and_item_and_min"
+    t.index ["wholesale_profile_id", "item_id", "item_type", "price"], name: "index_wholesale_items_on_prof_id_and_item_and_price"
+    t.index ["wholesale_profile_id", "min_quantity"], name: "index_wholesale_items_on_wholesale_profile_id_and_min_quantity"
+    t.index ["wholesale_profile_id", "price"], name: "index_wholesale_items_on_wholesale_profile_id_and_price"
+    t.index ["wholesale_profile_id"], name: "index_wholesale_items_on_wholesale_profile_id"
+  end
+
+  create_table "wholesale_profiles", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "status", default: 0
+    t.boolean "default_profile", default: false
+    t.hstore "properties", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_wholesale_profiles_on_status"
+    t.index ["title", "status"], name: "index_wholesale_profiles_on_title_and_status"
   end
 
 end

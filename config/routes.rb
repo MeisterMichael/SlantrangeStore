@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 		get :select_user, on: :member
 	end
 
-	devise_for :users, :controllers => { :omniauth_callbacks => 'oauth', :registrations => 'registrations', :sessions => 'sessions', :passwords => 'passwords' }
+	if ActiveRecord::Base.connection.table_exists? 'users'
+		devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'sessions', :passwords => 'passwords' } # :omniauth_callbacks => 'oauth', 
+	end
 
 	mount SwellEcom::Engine, :at => '/'
 	mount SwellMedia::Engine, :at => '/'
