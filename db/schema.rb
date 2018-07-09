@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709153664) do
+ActiveRecord::Schema.define(version: 20180709160300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -223,13 +223,6 @@ ActiveRecord::Schema.define(version: 20180709153664) do
     t.string "code"
     t.index ["email", "type"], name: "index_contacts_on_email_and_type"
     t.index ["user_id"], name: "index_contacts_on_user_id"
-  end
-
-  create_table "device_types", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "discount_items", force: :cascade do |t|
@@ -709,42 +702,14 @@ ActiveRecord::Schema.define(version: 20180709153664) do
     t.integer "shipping_carrier_service_id"
     t.integer "shipping"
     t.integer "tax"
+    t.text "serial_number"
+    t.text "primary_application"
+    t.text "secondary_application"
     t.index ["billing_address_id"], name: "index_subscriptions_on_billing_address_id"
+    t.index ["serial_number"], name: "index_subscriptions_on_serial_number"
     t.index ["shipping_address_id"], name: "index_subscriptions_on_shipping_address_id"
     t.index ["subscription_plan_id"], name: "index_subscriptions_on_subscription_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
-  end
-
-  create_table "tracked_device_owners", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "subscription_id"
-    t.bigint "tracked_device_id"
-    t.datetime "start_at"
-    t.datetime "end_at"
-    t.datetime "shipped_at"
-    t.datetime "activated_at"
-    t.datetime "returned_at"
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["subscription_id"], name: "index_tracked_device_owners_on_subscription_id"
-    t.index ["tracked_device_id"], name: "index_tracked_device_owners_on_tracked_device_id"
-    t.index ["user_id"], name: "index_tracked_device_owners_on_user_id"
-  end
-
-  create_table "tracked_devices", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "device_type_id"
-    t.integer "status", default: 0
-    t.string "make"
-    t.string "model"
-    t.string "version"
-    t.string "serial_number"
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["device_type_id"], name: "index_tracked_devices_on_device_type_id"
-    t.index ["user_id"], name: "index_tracked_devices_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -821,6 +786,7 @@ ActiveRecord::Schema.define(version: 20180709153664) do
     t.integer "wholesale_profile_id"
     t.integer "preferred_shipping_address_id"
     t.integer "preferred_billing_address_id"
+    t.string "company_name"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
