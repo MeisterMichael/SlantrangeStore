@@ -76,5 +76,5 @@ swell_engines_path = ENV['SWELL_ENGINE_PATH'] || '../engines'
 # prod
 gem 'swell_media', git: 'https://github.com/Groundswell/swell_media.git', :tag => "v2.11.0"
 gem 'swell_theme_store', git: 'git://github.com/Groundswell/swell_theme_store.git'
-gem 'swell_ecom', git: 'https://github.com/Groundswell/swell_ecom.git', :tag => "v2.20.0"
+gem 'swell_ecom', git: 'https://github.com/Groundswell/swell_ecom.git', :tag => "v2.20.1"
 gem 'bunyan', git: 'https://github.com/Groundswell/bunyan.git', :tag => "v1.3.0"

@@ -14,8 +14,10 @@ GIT
       rails (~> 5.1.6)
       user_agent_parser
 
-PATH
-  remote: ../../engines/swell_ecom
+GIT
+  remote: https://github.com/Groundswell/swell_ecom.git
+  revision: 04b8973df7735d04a39b999b754f4804bd281485
+  tag: v2.20.1
   specs:
     swell_ecom (2.20.1)
       credit_card_validations
@@ -23,8 +25,10 @@ PATH
       rest-client
       swell_media
 
-PATH
-  remote: ../../engines/swell_media
+GIT
+  remote: https://github.com/Groundswell/swell_media.git
+  revision: aa6b995a31b30eb335b81c7e028e889b766d71bf
+  tag: v2.11.0
   specs:
     swell_media (2.11.0)
       acts-as-taggable-array-on
